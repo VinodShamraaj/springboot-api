@@ -53,5 +53,6 @@ This will start the Spring Boot app on [http://localhost:8080](http://localhost:
 
 ## Notes
 
+- You can find the Postman collection for testing in the root folder of the project
 - Ensure your MSSQL database is running and accessible from the application.
 - If you're using a local database, ensure the database driver is correctly installed and available.
