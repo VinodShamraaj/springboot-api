@@ -19,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @PostMapping("/new")
