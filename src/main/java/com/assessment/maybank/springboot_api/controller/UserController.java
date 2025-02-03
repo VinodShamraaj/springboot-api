@@ -2,6 +2,9 @@ package com.assessment.maybank.springboot_api.controller;
 
 import com.assessment.maybank.springboot_api.model.User;
 import com.assessment.maybank.springboot_api.service.UserService;
+import com.assessment.maybank.springboot_api.dto.UpdateUserDTO;
+import com.assessment.maybank.springboot_api.dto.ResponseDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +22,13 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        logger.info("Request: Create User {}", user);
+    @PostMapping("/new")
+    public ResponseEntity<ResponseDTO<User>> createUser(@RequestBody User user) {
         User savedUser = userService.saveUser(user);
-        logger.info("Response: {}", savedUser);
-        return ResponseEntity.ok(savedUser);
+
+        ResponseDTO<User> response = new ResponseDTO("User created successfully", savedUser);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -33,6 +37,24 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("users", users.getContent());
         response.put("totalPages", users.getTotalPages());
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDTO<User>> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+
+        ResponseDTO<User> response = new ResponseDTO<>("User retrieved successfully", user);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResponseDTO<User>> updateUser(@PathVariable Long id,@RequestBody UpdateUserDTO updateUserDTO) {
+        User updatedUser = userService.updateUser(id, updateUserDTO);
+
+        ResponseDTO<User> response = new ResponseDTO("User updated successfully", updatedUser);
+        
         return ResponseEntity.ok(response);
     }
 }
