@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FavoritePlaceRepository extends JpaRepository<FavoritePlace, Long> {
+    FavoritePlace findByName(String name);
 }

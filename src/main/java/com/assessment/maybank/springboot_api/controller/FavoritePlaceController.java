@@ -31,17 +31,17 @@ public class FavoritePlaceController {
     public ResponseEntity<Map<String, Object>> getFavoritePlaces(@RequestParam(defaultValue = "0") int page) {
         Page<FavoritePlace> favoritePlaces = favoritePlaceService.getFavoritePlaces(page);
         Map<String, Object> response = new HashMap<>();
-        response.put("users", favoritePlaces.getContent());
+        response.put("places", favoritePlaces.getContent());
         response.put("totalPages", favoritePlaces.getTotalPages());
         return ResponseEntity.ok(response);
     }
     
-    // @GetMapping("/{name}")
-    // public ResponseEntity<ResponseDTO<User>> getUserById(@PathVariable Long id) {
-    //     User user = userService.getUserById(id);
+    @GetMapping("/{name}")
+    public ResponseEntity<ResponseDTO<FavoritePlace>> getFavoritePlaceByName(@PathVariable String name) {
+        FavoritePlace favoritePlace = favoritePlaceService.getFavoritePlaceByName(name);
 
-    //     ResponseDTO<User> response = new ResponseDTO<>("User retrieved successfully", user);
+        ResponseDTO<FavoritePlace> response = new ResponseDTO<>("Favorite place retrieved successfully", favoritePlace);
 
-    //     return ResponseEntity.ok(response);
-    // }
+        return ResponseEntity.ok(response);
+    }
 }

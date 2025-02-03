@@ -4,6 +4,9 @@ import com.assessment.maybank.springboot_api.model.FavoritePlace;
 import com.assessment.maybank.springboot_api.repository.FavoritePlaceRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,11 +24,11 @@ public class FavoritePlaceService {
 
     @Transactional(readOnly = true)
     public Page<FavoritePlace> getFavoritePlaces(int page) {
-        return favoritePlaceRepository.findAll(PageRequest.of(page, 10));
+        return favoritePlaceRepository.findAll(PageRequest.of(page, 5));
     }
 
-    // @Transactional(readOnly = true)
-    // public Page<FavoritePlace> checkFavoritePlace(int page) {
-    //     return favoritePlaceRepository.Find();
-    // }
+    @Transactional(readOnly = true)
+    public FavoritePlace getFavoritePlaceByName(String name) {
+        return favoritePlaceRepository.findByName(name);
+    }
 }
